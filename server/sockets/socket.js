@@ -28,7 +28,7 @@ io.on('connection', (client) => {
     client.on('mensajeApi', (data) => {
         console.log(data);
         const parseData = JSON.parse(data);
-        mensajes.agregarMensaje(parseData.Area, parseData.Mensaje, 'Administrador', 2, 'Meche', parseData.Data);
+        mensajes.agregarMensaje(parseData.Area, parseData.Mensaje, 'Administrador', 2, false, parseData.Data);
         client.to(2).broadcast.emit('enviarMensaje', mensajes.getMensajes(2));
         client.to(2).broadcast.emit('cacharMensaje', parseData.Mensaje)
     })

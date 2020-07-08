@@ -6,12 +6,12 @@ class Mensajes {
         this.mensaje = {};
     }
 
-    agregarMensaje(encabezado, cuerpo, usuario, rol, destinatario, informacion) {
+    agregarMensaje(encabezado, cuerpo, usuario, rol, estaVisto, informacion) {
         this.id = this.mensajes.length;
         if (!informacion)
-            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, destinatario };
+            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto };
         else {
-            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, destinatario, informacion };
+            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto, informacion };
         }
 
         this.mensajes.push(this.mensaje);
@@ -28,7 +28,8 @@ class Mensajes {
     }
     eliminarMensaje(mensajeEliminar) {
         console.log(mensajeEliminar);
-        this.mensajes = this.mensajes.filter((mensaje) => mensaje.informacion.Oid !== mensajeEliminar.oid);
+        const index = this.mensajes.findIndex((mensaje) => mensaje.informacion.Oid !== mensajeEliminar.oid);
+        this.mensajes[index].estaVisto = true;
     }
 
     getMensajes(sala) {
