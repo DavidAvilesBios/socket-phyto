@@ -26,11 +26,17 @@ class Mensajes {
         return mensaje;
 
     }
-    eliminarMensaje(mensajeEliminar) {
+    marcarMensaje(mensajeEliminar) {
         console.log(mensajeEliminar);
         const index = this.mensajes.findIndex((mensaje) => mensaje.informacion.Oid === mensajeEliminar.oid);
         console.log(index);
         this.mensajes[index].estaVisto = true;
+    }
+
+    eliminarMensaje(mensajeEliminar) {
+
+        this.mensajes = this.mensajes.filter((mensaje) => mensaje.informacion.Oid !== mensajeEliminar.oid);
+
     }
 
     getMensajes(sala) {

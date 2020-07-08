@@ -33,7 +33,12 @@ io.on('connection', (client) => {
         client.to(2).broadcast.emit('cacharMensaje', parseData.Mensaje)
     })
 
-    client.on('borrarMensajes', (mensajeEliminar, callback) => {
+    client.on('marcarMensajes', (mensajeEliminar, callback) => {
+        mensajes.marcarMensaje(mensajeEliminar);
+        client.to(2).broadcast.emit('enviarMensaje', mensajes.getMensajes(2));
+        callback(mensajes.getMensajes(2));
+    })
+    client.on('eliminarMensaje', (mensajeEliminar, callback) => {
         mensajes.eliminarMensaje(mensajeEliminar);
         client.to(2).broadcast.emit('enviarMensaje', mensajes.getMensajes(2));
         callback(mensajes.getMensajes(2));
