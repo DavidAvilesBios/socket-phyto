@@ -28,7 +28,8 @@ class Mensajes {
     }
     eliminarMensaje(mensajeEliminar) {
         console.log(mensajeEliminar);
-        const index = this.mensajes.findIndex((mensaje) => mensaje.informacion.Oid !== mensajeEliminar.oid);
+        const index = this.mensajes.findIndex((mensaje) => mensaje.informacion.Oid === mensajeEliminar.oid);
+        console.log(index);
         this.mensajes[index].estaVisto = true;
     }
 
