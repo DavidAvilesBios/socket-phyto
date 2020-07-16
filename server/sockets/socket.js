@@ -66,7 +66,8 @@ io.on('connection', (client) => {
           axios.post('https://fcm.googleapis.com/fcm/send', data, {
               headers: headers
             })
-            .then((response) => {               
+            .then((response) => {   
+                console.log(response);            
             })
             .catch((error) => {
             })
