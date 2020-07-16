@@ -1,6 +1,7 @@
 const { io } = require('../server');
 const { Usuarios } = require('../classes/usuarios');
 const { Mensajes } = require('../classes/mensajes');
+const axios = require('axios');
 const usuarios = new Usuarios();
 const mensajes = new Mensajes();
 
@@ -42,6 +43,35 @@ io.on('connection', (client) => {
         mensajes.eliminarMensaje(mensajeEliminar);
         client.to(2).broadcast.emit('enviarMensaje', mensajes.getMensajes(2));
         callback(mensajes.getMensajes(2));
+    })
+
+    client.on('recibirPaquete',(paqueteAgregar) => {
+         //axios.post('')
+         const parseData = JSON.parse(paqueteAgregar);
+         const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'key=AAAAfFSGGj4:APA91bEFrSOFRqxm5eGZEaY4aHcw0g97dVmHdS10QSqCxqXKJLn17x02r2RdD7CBwpmfGKKtUYcXuJVxomg_Zkfx5OGWm_kory6J3klmEfcaBNqcaUGl4PkYBXYctidU8FlIGFFFbZBN'
+          }
+          const data = {
+             to: parseData.Token,
+             notification:{
+                title: "Se recibio el paquete",
+                body : "Se recibio el paquete:" + parseData.Data.Folio  
+            },
+            data: {
+                prueba: 'jalo'
+            }
+          }
+          
+          axios.post('https://fcm.googleapis.com/fcm/send', data, {
+              headers: headers
+            })
+            .then((response) => {               
+            })
+            .catch((error) => {
+            })
+         console.log(data);
+         console.log(parseData);
     })
 
 
