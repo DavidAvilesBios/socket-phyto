@@ -9,9 +9,9 @@ class Mensajes {
     agregarMensaje(encabezado, cuerpo, usuario, rol, estaVisto, informacion) {
         this.id = this.mensajes.length;
         if (!informacion)
-            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto };
+            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto,fecha:Date.now()};
         else {
-            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto, informacion };
+            this.mensaje = { id: this.id, encabezado, cuerpo, usuario, rol, estaVisto,fecha:Date.now(), informacion };
         }
 
         this.mensajes.push(this.mensaje);
@@ -40,7 +40,8 @@ class Mensajes {
     }
 
     getMensajes(sala) {
-        return this.mensajes.filter((mensaje) => mensaje.rol === sala);
+        const mensaje =  this.mensajes.filter((mensaje) => mensaje.rol === sala);
+        return mensaje.sort((a, b) => parseFloat(b.fecha) - parseFloat(a.fecha));
     }
 
     getMensajesDestinatario(id) {
