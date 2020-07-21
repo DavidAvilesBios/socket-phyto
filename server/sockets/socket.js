@@ -48,19 +48,22 @@ io.on('connection', (client) => {
     client.on('recibirPaquete',(paqueteAgregar) => {
          //axios.post('')
          const parseData = JSON.parse(paqueteAgregar);
+         console.log(parseData);
          const headers = {
             'Content-Type': 'application/json',
             'Authorization': 'key=AAAAfFSGGj4:APA91bEFrSOFRqxm5eGZEaY4aHcw0g97dVmHdS10QSqCxqXKJLn17x02r2RdD7CBwpmfGKKtUYcXuJVxomg_Zkfx5OGWm_kory6J3klmEfcaBNqcaUGl4PkYBXYctidU8FlIGFFFbZBN'
           }
+          const date = new Date().toISOString().replace(/T/, ' ').      // replace T with a space
+          replace(/\..+/, '') ;
           const data = {
              to: parseData.Token,
              notification:{
                 title: "Paquetes",
-                body : "Se ha recibido el paquete enviado el dia: " + new Date() + "por parte de: " + parseData.RecibidoPor.Nombre,
+                body : "Se ha recibido el paquete enviado el dia: " +  date   + " por parte de: " + parseData.Data.RecibidoPor.Nombre,
                 sound: "customsound-ios.wav" 
             },
             data: {
-                prueba: 'jalo'
+                prueba: 'jalo123'
             }
           }
           
