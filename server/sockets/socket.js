@@ -55,8 +55,8 @@ io.on('connection', (client) => {
           const data = {
              to: parseData.Token,
              notification:{
-                title: "Se recibio el paquete",
-                body : "Se recibio el paquete:" + parseData.Data.Folio ,
+                title: "Paquetes",
+                body : "Se ha recibido el paquete enviado el dia: " + new Date() + "por parte de: " + parseData.RecibidoPor.Nombre,
                 sound: "customsound-ios.wav" 
             },
             data: {
