@@ -60,7 +60,7 @@ io.on('connection', (client) => {
                 sound: "customsound-ios.wav" 
             },
             data: {
-                prueba: 'jalo1233'
+                prueba: 'jalo'
             }
           }
           
