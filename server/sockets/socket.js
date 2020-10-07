@@ -47,16 +47,17 @@ io.on('connection', (client) => {
 
     client.on("EnviarNotificacion", Notificacion => {
         //axios.post('')
-        const parseData = JSON.parse(paqueteAgregar);
+        const parseData = JSON.parse(Notificacion);
         console.log(parseData);
-        if (Notificacion.App === "Ventas") {
-          const headers = {
+        let headers = {};
+        if (parseData.App === "Ventas") {
+           headers = {
             "Content-Type": "application/json",
             Authorization:
               "key=AAAAfFSGGj4:APA91bEFrSOFRqxm5eGZEaY4aHcw0g97dVmHdS10QSqCxqXKJLn17x02r2RdD7CBwpmfGKKtUYcXuJVxomg_Zkfx5OGWm_kory6J3klmEfcaBNqcaUGl4PkYBXYctidU8FlIGFFFbZBN"
           };
         } else {
-          const headers = {
+           headers = {
             "Content-Type": "application/json",
             Authorization:
               "key=AAAAq8Vf97g:APA91bEgrSLUnvMO6G6Q9YMu1R9-DPgtc_wJUgrkcWHijMyI466VU4n0SIb25ndVXO-zNt-10vzjXiK7Kan8lHTe6GDRveRjXIQTVPVFAg8jx7CFpfZ-Hcwf4AMQFAZQr9P1zugfq2Rj"
