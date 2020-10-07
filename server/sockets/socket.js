@@ -45,40 +45,47 @@ io.on('connection', (client) => {
         callback(mensajes.getMensajes(2));
     })
 
-    client.on('recibirPaquete',(paqueteAgregar) => {
-         //axios.post('')
-         const parseData = JSON.parse(paqueteAgregar);
-         console.log(parseData);
-         const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'key=AAAAfFSGGj4:APA91bEFrSOFRqxm5eGZEaY4aHcw0g97dVmHdS10QSqCxqXKJLn17x02r2RdD7CBwpmfGKKtUYcXuJVxomg_Zkfx5OGWm_kory6J3klmEfcaBNqcaUGl4PkYBXYctidU8FlIGFFFbZBN'
+    client.on("EnviarNotificacion", Notificacion => {
+        //axios.post('')
+        const parseData = JSON.parse(paqueteAgregar);
+        console.log(parseData);
+        if (Notificacion.App === "Ventas") {
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization:
+              "key=AAAAfFSGGj4:APA91bEFrSOFRqxm5eGZEaY4aHcw0g97dVmHdS10QSqCxqXKJLn17x02r2RdD7CBwpmfGKKtUYcXuJVxomg_Zkfx5OGWm_kory6J3klmEfcaBNqcaUGl4PkYBXYctidU8FlIGFFFbZBN"
+          };
+        } else {
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization:
+              "key=AAAAq8Vf97g:APA91bEgrSLUnvMO6G6Q9YMu1R9-DPgtc_wJUgrkcWHijMyI466VU4n0SIb25ndVXO-zNt-10vzjXiK7Kan8lHTe6GDRveRjXIQTVPVFAg8jx7CFpfZ-Hcwf4AMQFAZQr9P1zugfq2Rj"
+          };
+        }
+
+        const data = {
+          to: parseData.Token,
+          notification: {
+            title: parseData.Asunto,
+            body: parseData.Cuerpo,
+            sound: "customsound-ios.wav"
+          },
+          data: {
           }
-          //const dateNoFormat = JSON.parse(parseData.Data.FechaEnvio)
-          const date = new Date(parseData.Data.FechaEnvio).toISOString().replace(/T/, ' ').      // replace T with a space
-          replace(/\..+/, '') ;
-          const data = {
-             to: parseData.Token,
-             notification:{
-                title: "Paquetes",
-                body : "Se ha recibido el paquete enviado el dia: " +  date   + " por parte de: " + parseData.Data.RecibidoPor.Nombre +"\nDatos de paqueteria: \nPaqueteria: " + parseData.Data.Paqueteria.Nombre + "\nCodigo de rastreo: " + parseData.Data.CodigoRastreo,
-                sound: "customsound-ios.wav" 
-            },
-            data: {
-                prueba: 'jalo123'
-            }
-          }
-          
-          axios.post('https://fcm.googleapis.com/fcm/send', data, {
-              headers: headers
-            })
-            .then((response) => {   
-                console.log(response);            
-            })
-            .catch((error) => {
-            })
-         console.log(data);
-         console.log(parseData);
-    })
+        };
+
+        axios
+          .post("https://fcm.googleapis.com/fcm/send", data, {
+            headers: headers
+          })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {});
+        console.log(data);
+        console.log(parseData);
+      });
+
 
 
 
